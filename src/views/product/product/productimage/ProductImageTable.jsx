@@ -1,17 +1,17 @@
 import { CButton } from '@coreui/react'
 import React from 'react'
 import { useHistory } from 'react-router';
-import productApi from 'src/api/productApi';
+import productImageApi from 'src/api/productImageApi';
 import 'src/style/admin.css';
 
-const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
+const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
 
     const history = useHistory();
 
-    const handleDeleteProduct = (id, name) => {
-        const deleteProduct = async () => {
+    const handleDeleteProductImage = (id, name) => {
+        const deleteProductImage = async () => {
             try {
-                await productApi.delete(id)
+                await productImageApi.delete(id)
                     .then(res => {
                         alert(res);
                         handlerefreshDeleteItem();
@@ -22,7 +22,7 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
             }
         }
         if (window.confirm("Are you sure you want to delete: " + name + " ?")) {
-            deleteProduct();
+            deleteProductImage();
         }
     }
 
@@ -33,21 +33,16 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                 <tr key={item.id}>
                     <th scope="row">{item.id}</th>
                     <td>
-                        <p><b>Name</b> {item.name}</p>
-                        <p><b>Code</b> {item.code}</p>
-                        <p><b>Tag</b> {item.tag}</p>
+                        {item.productName}
                     </td>
                     <td>
-                        <p><b>Category</b> {item.categoryName}</p>
-                        <p><b>Product</b> {item.productName}</p>
+                        {item.title}
                     </td>
                     <td>
-                        <p><b>Current Price</b> {item.price}</p>
-                        <p><b>Regular Price</b> {item.finalPrice}</p>
-                        <p><b>Discount</b> {item.discount}%</p>
+                        <img width="100px" src={item.imagePath} alt={item.title} />
                     </td>
-                    <td>
-                        <p><b>Comment</b> {item.productComments}</p>
+                    {/* <td>
+                        <p><b>Comment</b> {item.productImageComments}</p>
                         <p><b>Rating</b> {item.averageRating}%</p>
                     </td>
                     <td>{item.totalImage}</td>
@@ -57,16 +52,16 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                     </td>
                     <td>
                     <input type="checkbox" checked={item.ispublish} disabled/>
-                    </td>
+                    </td> */}
                     <td>
                         <div style={{ width: "110px" }}>
                             <CButton color="warning" 
-                                onClick={() => history.push(`/product/product/${item.id}`)} >
+                                onClick={() => history.push(`/productImage/productImage/${item.id}`)} >
                              Edit
                             </CButton>
                             {' '}
                             <CButton color="danger" 
-                                onClick={() => handleDeleteProduct(item.id,item.name)}>
+                                onClick={() => handleDeleteProductImage(item.id,item.name)}>
                              Del
                             </CButton>
                         </div>
@@ -82,13 +77,9 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Info</th>
-                    <th scope="col">Price</th>
-                    <th scope="col">Comment</th>
-                    <th scope="col">Images</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Ispublish</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Title</th>
+                    <th scope="col">Image</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>
@@ -104,4 +95,4 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
     )
 }
 
-export default ProductTable
+export default ProductImageTable

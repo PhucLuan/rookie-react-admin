@@ -1,7 +1,7 @@
 import { CButton, CFormGroup } from '@coreui/react';
 import { FastField, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router';
+import { useHistory, useParams } from 'react-router';
 import productApi from 'src/api/productApi';
 import ImageField from 'src/custom-fields/ImageField';
 import InputField from 'src/custom-fields/InputField';
@@ -40,8 +40,8 @@ const ProductForm = () => {
     const {productId} = useParams();
     
     const isAddMode = !productId;
-    
-    console.log({isAddMode});
+    const history = useHistory();
+
     useEffect(() => {
         const fetchProductAddEdit = async () => {
             try {
@@ -135,8 +135,11 @@ const ProductForm = () => {
                     console.log({ values, errors, touched });
                     return (
                         <>
-                            <h3>Add Product</h3>
-
+                            <h3>{isAddMode? 'Add Product' : 'Edit Product' }</h3>
+                            {isAddMode? '' : 
+                                <CButton color="primary" onClick={() => history.push(`/product/product/productimage/${productId}`)}>
+                                    Product Image
+                                </CButton>}
                             <Form>
                                 <FastField
                                     name="name"
