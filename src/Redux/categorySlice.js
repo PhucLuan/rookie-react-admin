@@ -7,6 +7,7 @@ const initialState = {
         description : '',
         categoryId : 0,//category parent
         categoryParentName:'',
+        ispublish: false
     }
 }
 

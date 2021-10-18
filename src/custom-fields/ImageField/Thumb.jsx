@@ -19,7 +19,7 @@ const Thumb = ({ imageFile, initimageSrc }) => {
 
     return (
         <div>
-            <img src={imageFile !== null ? imageSrc : "/avatars/3.jpg"} alt="Ahihi"
+            <img src={imageFile !== null ? imageSrc : "/avatars/defaultImage.jpg"} alt="Ahihi"
                 height={200}
                 width={200} />
         </div>

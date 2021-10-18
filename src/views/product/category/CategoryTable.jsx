@@ -44,8 +44,11 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
                     <td>{item.categoryParentName}</td>
                     <td>{item.description}</td>
                     <td>{item.totalProduct}</td>
-                    {/* <td>{item.addedDate}</td>
-                    <td>{item.modifiedDate}</td> */}
+                    <td>
+                        <input type="checkbox" checked={item.ispublish} disabled/>
+                    </td>
+                    <td>{item.addedDate}</td>
+                    <td>{item.modifiedDate}</td>
                     <td>
                         <div style={{ width: "110px" }}>
                             <CButton color="warning" onClick={()=>handleEditCategory(item)}>Edit</CButton>
@@ -69,9 +72,10 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
                     <th scope="col">Category Parent</th>
                     <th scope="col">Description</th>
                     <th scope="col">TotalProduct</th>
+                    <th scope="col">Ispublish</th>
+                    <th scope="col">AddedDate</th>
+                    <th scope="col">ModifiedDate</th>
                     <th scope="col">Action</th>
-                    {/* <th scope="col">AddedDate</th>
-                    <th scope="col">ModifiedDate</th> */}
                 </tr>
             </thead>
             <tbody>

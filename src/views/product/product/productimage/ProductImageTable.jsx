@@ -1,17 +1,27 @@
 import { CButton } from '@coreui/react'
 import React from 'react'
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router';
 import productImageApi from 'src/api/productImageApi';
 import 'src/style/admin.css';
+import { onEditproductImage } from 'src/Redux/productimageSlide';
+import { ParseDateTime } from 'src/Helper/ParseDateTime';
 
-const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
+const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
 
     const history = useHistory();
 
-    const handleDeleteProductImage = (id, name) => {
+    const dispatch = useDispatch();
+
+    const handleEditProductImage = (item) => {
+        dispatch(onEditproductImage(item))
+        onEditMode(item.id)
+    }
+
+    const handleDeleteProductImage = (id,publicId, name) => {
         const deleteProductImage = async () => {
             try {
-                await productImageApi.delete(id)
+                await productImageApi.delete(id,publicId)
                     .then(res => {
                         alert(res);
                         handlerefreshDeleteItem();
@@ -25,7 +35,7 @@ const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
             deleteProductImage();
         }
     }
-
+    console.log({listitem})
     const items = listitem.map(
         (item, index) => {
 
@@ -40,6 +50,15 @@ const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
                     </td>
                     <td>
                         <img width="100px" src={item.imagePath} alt={item.title} />
+                    </td>
+                    <td>
+                        <input type="checkbox" checked={item.ispublish} disabled/>
+                    </td>
+                    <td>
+                        {item.publicId}
+                    </td>
+                    <td>
+                        {ParseDateTime(item.addedDate)}
                     </td>
                     {/* <td>
                         <p><b>Comment</b> {item.productImageComments}</p>
@@ -56,12 +75,12 @@ const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
                     <td>
                         <div style={{ width: "110px" }}>
                             <CButton color="warning" 
-                                onClick={() => history.push(`/productImage/productImage/${item.id}`)} >
+                                onClick={()=>handleEditProductImage(item)} >
                              Edit
                             </CButton>
                             {' '}
                             <CButton color="danger" 
-                                onClick={() => handleDeleteProductImage(item.id,item.name)}>
+                                onClick={() => handleDeleteProductImage(item.id,item.publicId,item.title)}>
                              Del
                             </CButton>
                         </div>
@@ -80,6 +99,9 @@ const ProductImageTable = ({ listitem, handlerefreshDeleteItem }) => {
                     <th scope="col">Product Name</th>
                     <th scope="col">Title</th>
                     <th scope="col">Image</th>
+                    <th scope="col">Publish</th>
+                    <th scope="col">Public ID (cloudinary)</th>
+                    <th scope="col">Add date</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>

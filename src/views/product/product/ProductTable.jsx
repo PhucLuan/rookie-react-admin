@@ -2,6 +2,7 @@ import { CButton } from '@coreui/react'
 import React from 'react'
 import { useHistory } from 'react-router';
 import productApi from 'src/api/productApi';
+import { ParseDateTime } from 'src/Helper/ParseDateTime';
 import 'src/style/admin.css';
 
 const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
@@ -52,8 +53,8 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                     </td>
                     <td>{item.totalImage}</td>
                     <td>
-                        <p><b>AddedDate</b> {item.addedDate}</p>
-                        <p><b>ModifiedDate</b> {item.modifiedDate}%</p>
+                        <p><b>AddedDate :</b> <p>{ParseDateTime(item.addedDate)}</p></p>
+                        <p><b>ModifiedDate :</b> <p>{ParseDateTime(item.modifiedDate)}</p></p>
                     </td>
                     <td>
                     <input type="checkbox" checked={item.ispublish} disabled/>

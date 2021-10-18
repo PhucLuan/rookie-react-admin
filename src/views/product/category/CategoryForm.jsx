@@ -1,5 +1,5 @@
 import { CButton, CFormGroup } from '@coreui/react';
-import { FastField, Form, Formik } from 'formik';
+import { FastField, Field, Form, Formik } from 'formik';
 import React from 'react'
 import InputField from 'src/custom-fields/InputField';
 import SelectField from 'src/custom-fields/SelectField'
@@ -27,13 +27,10 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
     const initialValues = isAddMode ? {
         name: '',
         description: '',
+        order:0,
+        ispublish: false,
     } : editcategorymodel;
     
-    // const myoptions = [
-    //     { value: '1', label: 'Chocolate' },
-    //     { value: '2', label: 'Strawberry' },
-    //     { value: '3', label: 'Vanilla' }
-    // ]
 
     const categoriesoption = categories.map(
         (category) => {return(
@@ -112,6 +109,12 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
                                 placeholder="Eg: Wow nature ..."
                             />
                             <FastField
+                                    name="order"
+                                    component={InputField}
+                                    type="number"
+                                    label="Order"
+                                />
+                            <FastField
                                 name="categoryId"
                                 component={SelectField}
 
@@ -119,6 +122,7 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
                                 placeholder="What's your product category?"
                                 options={categoriesoption}
                             />
+                            <Field label="Publish" type="checkbox" name="ispublish" />
                             <CFormGroup>
                                 <CButton type="submit" color="primary">{isAddMode?'Add category':'Save change'}</CButton>
                                 {' '}

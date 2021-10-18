@@ -8,7 +8,7 @@ import InputField from 'src/custom-fields/InputField';
 import SelectField from 'src/custom-fields/SelectField';
 import * as Yup from 'yup';
 
-const defaultImageSrc = "/avatars/3.jpg";
+const defaultImageSrc = "/avatars/defaultImage.jpg";
 
 const initialProductValues = {
     //productid: 0,
@@ -223,7 +223,7 @@ const ProductForm = () => {
                                     type="number"
                                     label="Discount"
                                 />
-                                 <Field type="checkbox" name="ispublish" />
+                                 <Field label="Publish" type="checkbox" name="ispublish" />
                                 {/* <FastField
                                     name="images"
                                     component={ImageField}

@@ -31,8 +31,8 @@ const productImageApi = {
         return axiosClient.put(url,product)
     },
 
-    delete: (id) => {
-        const url = `api/ProductImages/${id}`;
+    delete: (id,publicId) => {
+        const url = `api/ProductImages/${id}/${publicId}`;
         return axiosClient.delete(url)
     }
 }
