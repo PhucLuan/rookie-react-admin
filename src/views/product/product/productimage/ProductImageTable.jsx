@@ -9,7 +9,7 @@ import { ParseDateTime } from 'src/Helper/ParseDateTime';
 
 const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
 
-    const history = useHistory();
+    //const history = useHistory();
 
     const dispatch = useDispatch();
 

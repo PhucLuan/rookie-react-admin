@@ -3,7 +3,6 @@ import { FastField, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router';
 import productApi from 'src/api/productApi';
-import ImageField from 'src/custom-fields/ImageField';
 import InputField from 'src/custom-fields/InputField';
 import SelectField from 'src/custom-fields/SelectField';
 import * as Yup from 'yup';
@@ -24,7 +23,8 @@ const initialProductValues = {
     discount: 0,
     imageSrc: defaultImageSrc,
     images: null,
-    ispublish: 0
+    ispublish: 0,
+    productStock:0
 
 }
 const initialProductAddEdit = {
@@ -68,7 +68,7 @@ const ProductForm = () => {
             }
         }
         fetchProductAddEdit();
-    }, [])
+    }, [isAddMode,productId])
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
@@ -97,8 +97,9 @@ const ProductForm = () => {
                 data.append('price', product.price);
                 data.append('discount', product.discount);
                 data.append('images', product.images);
+                data.append('productStock', product.productStock);
                 data.append('ispublish', product.ispublish);
-                await productApi.post(data)
+                await productApi.post(product)
                     .then((res) => {
                         alert(res);
                         resetForm();
@@ -222,6 +223,12 @@ const ProductForm = () => {
                                     component={InputField}
                                     type="number"
                                     label="Discount"
+                                />
+                                <FastField
+                                    name="productStock"
+                                    component={InputField}
+                                    type="number"
+                                    label="Product Stock"
                                 />
                                  <Field label="Publish" type="checkbox" name="ispublish" />
                                 {/* <FastField

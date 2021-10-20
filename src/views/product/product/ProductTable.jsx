@@ -34,41 +34,32 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                 <tr key={item.id}>
                     <th scope="row">{item.id}</th>
                     <td>
-                        <p><b>Name</b> {item.name}</p>
-                        <p><b>Code</b> {item.code}</p>
-                        <p><b>Tag</b> {item.tag}</p>
+                        <img width="100px" src={item.imagePath} alt={item.name} />
                     </td>
                     <td>
-                        <p><b>Category</b> {item.categoryName}</p>
-                        <p><b>Product</b> {item.productName}</p>
+                        {item.name}
                     </td>
                     <td>
-                        <p><b>Current Price</b> {item.price}</p>
-                        <p><b>Regular Price</b> {item.finalPrice}</p>
-                        <p><b>Discount</b> {item.discount}%</p>
+                        {item.code}
                     </td>
                     <td>
-                        <p><b>Comment</b> {item.productComments}</p>
-                        <p><b>Rating</b> {item.averageRating}%</p>
+                        {item.finalPrice}
+
                     </td>
-                    <td>{item.totalImage}</td>
+                    <td>{item.productStock}</td>
                     <td>
-                        <p><b>AddedDate :</b> <p>{ParseDateTime(item.addedDate)}</p></p>
-                        <p><b>ModifiedDate :</b> <p>{ParseDateTime(item.modifiedDate)}</p></p>
-                    </td>
-                    <td>
-                    <input type="checkbox" checked={item.ispublish} disabled/>
+                        <input type="checkbox" checked={item.ispublish} disabled />
                     </td>
                     <td>
                         <div style={{ width: "110px" }}>
-                            <CButton color="warning" 
+                            <CButton color="warning"
                                 onClick={() => history.push(`/product/product/${item.id}`)} >
-                             Edit
+                                Edit
                             </CButton>
                             {' '}
-                            <CButton color="danger" 
-                                onClick={() => handleDeleteProduct(item.id,item.name)}>
-                             Del
+                            <CButton color="danger"
+                                onClick={() => handleDeleteProduct(item.id, item.name)}>
+                                Del
                             </CButton>
                         </div>
                     </td>
@@ -83,13 +74,12 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
             <thead>
                 <tr>
                     <th scope="col">ID</th>
-                    <th scope="col">Product</th>
-                    <th scope="col">Info</th>
+                    <th scope="col">Pricture</th>
+                    <th scope="col">Product Name</th>
+                    <th scope="col">Code</th>
                     <th scope="col">Price</th>
-                    <th scope="col">Comment</th>
-                    <th scope="col">Images</th>
-                    <th scope="col">Date</th>
-                    <th scope="col">Ispublish</th>
+                    <th scope="col">Stock quantity</th>
+                    <th scope="col">Published</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>

@@ -63,7 +63,7 @@ const ProductImage = () => {
         fetchProductList();
 
 
-    }, [isRefresh])
+    }, [isRefresh,productId])
 
     const handleEditProductImage = (Id) => {
         setproductImageId(Id);
