@@ -1,15 +1,12 @@
 import { CButton } from '@coreui/react'
 import React from 'react'
 import { useDispatch } from 'react-redux';
-import { useHistory } from 'react-router';
 import productImageApi from 'src/api/productImageApi';
 import 'src/style/admin.css';
 import { onEditproductImage } from 'src/Redux/productimageSlide';
 import { ParseDateTime } from 'src/Helper/ParseDateTime';
 
 const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
-
-    //const history = useHistory();
 
     const dispatch = useDispatch();
 
@@ -18,10 +15,10 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
         onEditMode(item.id)
     }
 
-    const handleDeleteProductImage = (id,publicId, name) => {
+    const handleDeleteProductImage = (id, publicId, name) => {
         const deleteProductImage = async () => {
             try {
-                await productImageApi.delete(id,publicId)
+                await productImageApi.delete(id, publicId)
                     .then(res => {
                         alert(res);
                         handlerefreshDeleteItem();
@@ -35,7 +32,7 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
             deleteProductImage();
         }
     }
-    console.log({listitem})
+    console.log({ listitem })
     const items = listitem.map(
         (item, index) => {
 
@@ -52,7 +49,7 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
                         <img width="100px" src={item.imagePath} alt={item.title} />
                     </td>
                     <td>
-                        <input type="checkbox" checked={item.ispublish} disabled/>
+                        <input type="checkbox" checked={item.ispublish} disabled />
                     </td>
                     <td>
                         {item.publicId}
@@ -74,14 +71,14 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
                     </td> */}
                     <td>
                         <div style={{ width: "110px" }}>
-                            <CButton color="warning" 
-                                onClick={()=>handleEditProductImage(item)} >
-                             Edit
+                            <CButton color="warning"
+                                onClick={() => handleEditProductImage(item)} >
+                                Edit
                             </CButton>
                             {' '}
-                            <CButton color="danger" 
-                                onClick={() => handleDeleteProductImage(item.id,item.publicId,item.title)}>
-                             Del
+                            <CButton color="danger"
+                                onClick={() => handleDeleteProductImage(item.id, item.publicId, item.title)}>
+                                Del
                             </CButton>
                         </div>
                     </td>

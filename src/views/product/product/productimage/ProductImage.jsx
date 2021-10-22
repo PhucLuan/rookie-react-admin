@@ -3,7 +3,7 @@ import {
 } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import { useParams } from 'react-router'
+import { useHistory, useParams } from 'react-router'
 import productImageApi from 'src/api/productImageApi'
 import ProductImageForm from './ProductImageForm'
 import ProductImageTable from './ProductImageTable'
@@ -18,7 +18,9 @@ const ProductImage = () => {
 
     const [ProductImages, setProductImages] = useState();
 
-    const {productId} = useParams();
+    const { productId } = useParams();
+
+    const history = useHistory();
 
     const customStyles = {
         content: {
@@ -63,7 +65,7 @@ const ProductImage = () => {
         fetchProductList();
 
 
-    }, [isRefresh,productId])
+    }, [isRefresh, productId])
 
     const handleEditProductImage = (Id) => {
         setproductImageId(Id);
@@ -76,6 +78,12 @@ const ProductImage = () => {
             <CRow>
                 <CCol xs="12" lg="2">
                     <CCardBody>
+                        <CButton
+                            onClick={() => history.goBack()}
+                            className="mr-1 btn-dark" >
+                            Back
+                        </CButton>
+                        {' '}
                         <CButton
                             onClick={() => onAddProductImage()}
                             className="mr-1 btn-info"
@@ -114,9 +122,9 @@ const ProductImage = () => {
                 {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
                 {/* <button onClick={closeModal}>close</button> */}
                 <div className='clearfix'></div>
-                <ProductImageForm 
-                    productImageId={productImageId} 
-                    handlerefresh={handlerefresh} 
+                <ProductImageForm
+                    productImageId={productImageId}
+                    handlerefresh={handlerefresh}
                     closeModal={closeModal}
                     productId={productId}></ProductImageForm>
             </Modal>

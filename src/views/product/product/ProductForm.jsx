@@ -128,7 +128,7 @@ const ProductForm = () => {
             <Formik
                 initialValues={productAddEdit}
                 validationSchema={validationSchema}
-            onSubmit={(values, { resetForm }) => handleSubmitForm(values, { resetForm })}
+                onSubmit={(values, { resetForm }) => handleSubmitForm(values, { resetForm })}
             >
                 {formikProps => {
                     // do something here ...
