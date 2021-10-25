@@ -46,7 +46,7 @@ const ProductForm = () => {
         const fetchProductAddEdit = async () => {
             try {
                 if (isAddMode) {
-                    const response = await productApi.getAddEdit(0);
+                    const response = await productApi.getAddEdit("{00000000-0000-0000-0000-000000000000}");
                     response.name = '';
                     response.tag = '';
                     response.code = '';
@@ -75,14 +75,15 @@ const ProductForm = () => {
         code: Yup.string().required('This field is required.'),
         tag: Yup.string().required('This field is required.'),
         price: Yup.number().required('This field is required.'),
-        categoryId: Yup.number().min(1,'You have to choose one of the options.').required('This field is required.').nullable(),
-        brandId: Yup.number().min(1,'You have to choose one of the options.').required('This field is required.').nullable(),
-        unitId: Yup.number().min(1,'You have to choose one of the options.').required('This field is required.').nullable(),
+        categoryId: Yup.string().required('This field is required.'),
+        brandId: Yup.string().required('This field is required.'),
+        unitId: Yup.string().required('This field is required.'),
                 //images: Yup.string().required('This field is required.'),
 
     });
     
     const handleSubmitForm = (product, { resetForm }) => {
+        console.log({product})
         const postCategory = async () => {
             try {
                 if (isAddMode) {

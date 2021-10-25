@@ -9,8 +9,8 @@ import ProductTable from './ProductTable';
 
 
 const initialFilter = {
-    categoryId: 0,
-    brandId: 0,
+    categoryId: "",
+    brandId: "",
     keySearch: "",
     orderProperty: "",
     desc: true,

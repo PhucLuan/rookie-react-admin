@@ -60,22 +60,18 @@ const _nav =  [
       },
       {
         _tag: 'CSidebarNavItem',
-        name: 'Product Image',
-        to: '/product/productimage',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Product Stock',
-        to: '/product/productstock',
-      },
-      {
-        _tag: 'CSidebarNavItem',
         name: 'Product Comments',
         to: '/product/productcomment',
       },
     ]
   }
   ,
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Users',
+    to: '/user',
+    icon: 'cil-chart-pie'
+  },
   {
     _tag: 'CSidebarNavDropdown',
     name: 'Base',
