@@ -12,7 +12,7 @@ function ImageField(props) {
 
     const { form, label, field, imageSrc } = props;
     const { name } = field;
-    const { errors, touched } = form;
+    const { errors } = form;
     const showError = errors[name];
     const [imageFileShow, setimageFileShow] = useState(null);
 

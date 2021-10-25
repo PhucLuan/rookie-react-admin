@@ -1,37 +1,37 @@
 //import { CButton } from '@coreui/react'
 import React from 'react'
-import { useDispatch } from 'react-redux'
-import userApi from 'src/api/userApi';
+//import { useDispatch } from 'react-redux'
+//import userApi from 'src/api/userApi';
 //import { onEdituser } from 'src/Redux/userSlice';
 
 const UserTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
 
-    const dispatch = useDispatch();
+    // const dispatch = useDispatch();
 
-    const handleEditUser = (item) => {
-        //dispatch(onEdituser(item))
-        onEditMode(item.id)
-    }
+    // const handleEditUser = (item) => {
+    //     //dispatch(onEdituser(item))
+    //     onEditMode(item.id)
+    // }
     
-    const handleDeleteUser = (id, name) => {
-        const deleteUser = async () => {
-            try {
-                await userApi.delete(id)
-                .then(res => 
-                    {
-                        alert(res);
-                        handlerefreshDeleteItem();
-                    });
-                ;                
-            } catch (error) {
-                alert(error)
-            }
-        }
-        if (window.confirm("Are you sure you want to delete: "+name+" ?")) {
-            deleteUser();            
-          }
+    // const handleDeleteUser = (id, name) => {
+    //     const deleteUser = async () => {
+    //         try {
+    //             await userApi.delete(id)
+    //             .then(res => 
+    //                 {
+    //                     alert(res);
+    //                     handlerefreshDeleteItem();
+    //                 });
+    //             ;                
+    //         } catch (error) {
+    //             alert(error)
+    //         }
+    //     }
+    //     if (window.confirm("Are you sure you want to delete: "+name+" ?")) {
+    //         deleteUser();            
+    //       }
         
-    }
+    // }
 
     const items = listitem.map(
         (item,index) => {

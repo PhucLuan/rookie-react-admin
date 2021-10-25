@@ -7,43 +7,43 @@ import UserTable from './UserTable'
 
 const User = () => {
 
-    const [isRefresh, setisRefresh] = useState(false);
+    //const [isRefresh, setisRefresh] = useState(false);
 
-    const [modalIsOpen, setIsOpen] = useState(false);
+    // const [modalIsOpen, setIsOpen] = useState(false);
 
-    const [userId, setuserId] = useState()
+    // const [userId, setuserId] = useState()
 
     const [Users, setUsers] = useState();
 
-    const customStyles = {
-        content: {
-            top: '40%',
-            left: '60%',
-            right: 'auto',
-            bottom: 'auto',
-            marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
-            width: '30%'
-        },
-    };
+    // const customStyles = {
+    //     content: {
+    //         top: '40%',
+    //         left: '60%',
+    //         right: 'auto',
+    //         bottom: 'auto',
+    //         marginRight: '-50%',
+    //         transform: 'translate(-50%, -50%)',
+    //         width: '30%'
+    //     },
+    // };
 
-    function openModal() {
-        setIsOpen(true);
-    }
+    // function openModal() {
+    //     setIsOpen(true);
+    // }
 
-    function closeModal() {
-        //setisRefresh(!isRefresh)
-        setIsOpen(false);
-    }
+    // function closeModal() {
+    //     //setisRefresh(!isRefresh)
+    //     setIsOpen(false);
+    // }
 
-    function onAddUser() {
-        setuserId(undefined)
-        openModal();
-    }
+    // function onAddUser() {
+    //     setuserId(undefined)
+    //     openModal();
+    // }
 
-    const handlerefresh = () => {
-        setisRefresh(!isRefresh);
-    }
+    // const handlerefresh = () => {
+    //     setisRefresh(!isRefresh);
+    // }
 
     useEffect(() => {
         const fetchUserList = async () => {
@@ -58,12 +58,12 @@ const User = () => {
         fetchUserList();
 
 
-    }, [isRefresh])
+    }, [])
 
-    const handleEditUser = (Id) => {
-        setuserId(Id);
-        openModal();
-    }
+    // const handleEditUser = (Id) => {
+    //     setuserId(Id);
+    //     openModal();
+    // }
     
     return (
         <>
