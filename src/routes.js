@@ -34,6 +34,7 @@ const routes = [
   { path: '/product/product/:productId', name: 'Editproduct', component: ProductForm},
   { path: '/product/product', name: 'Products', component: Product },
   { path: '/user', name: 'Products', component: User },
+
 ];
 
 export default routes;

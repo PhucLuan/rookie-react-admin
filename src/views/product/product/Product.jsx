@@ -7,7 +7,6 @@ import InputField from 'src/custom-fields/InputField';
 import SelectField from 'src/custom-fields/SelectField';
 import ProductTable from './ProductTable';
 
-
 const initialFilter = {
     categoryId: "",
     brandId: "",
@@ -15,7 +14,7 @@ const initialFilter = {
     orderProperty: "",
     desc: true,
     page: 1,
-    limit: 2
+    limit: 10
 }
 
 const Product = () => {
@@ -78,6 +77,7 @@ const Product = () => {
         setisRefresh(!isRefresh);
 
     }
+
     return (
         <div>
             <CButton color="info" onClick={() => history.push("/product/product/add")}>Add</CButton>
@@ -156,9 +156,9 @@ const Product = () => {
                                     listitem={Products.items}
                                     handlerefreshDeleteItem={handlerefresh} />}
                             <div>
-                            <CButton onClick={() => prevPage(Filter)} >Previous</CButton>
-                            {' '}
-                            <CButton onClick={() => nextPage(Filter)} >Next</CButton>
+                                <CButton onClick={() => prevPage(Filter)} >Previous</CButton>
+                                {' '}
+                                <CButton onClick={() => nextPage(Filter)} >Next</CButton>
                             </div>
                         </CCardBody>
                     </CCard>

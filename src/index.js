@@ -12,11 +12,16 @@ import { icons } from './assets/icons'
 import { Provider } from 'react-redux'
 //import store from './store'
 import store from './Redux/store'
+import { OidcProvider } from 'redux-oidc';
+import userManager from './Helper/userManager';
+
 React.icons = icons
 
 ReactDOM.render(
   <Provider store={store}>
-    <App/>
+    <OidcProvider store={store} userManager={userManager}>
+      <App/>
+    </OidcProvider>
   </Provider>,
   document.getElementById('root')
 );
