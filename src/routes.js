@@ -1,4 +1,5 @@
 import React from 'react';
+import Page404 from './views/pages/page404/Page404';
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'));
 
@@ -12,6 +13,7 @@ const Product = React.lazy(() => import('./views/product/product/Product'));
 const ProductForm = React.lazy(() => import('./views/product/product/ProductForm'));
 const ProductImage = React.lazy(() => import('./views/product/product/productimage/ProductImage'));
 const ProductImageForm = React.lazy(() => import('./views/product/product/productimage/ProductImageForm'));
+const ProductComment = React.lazy(() => import('./views/product/product/productcomment/ProductComment'));
 
 const User = React.lazy(() => import('./views/user/User'));
 
@@ -28,13 +30,14 @@ const routes = [
   { path: '/product/category', name: 'Categories', component: Category },
   { path: '/product/unit', name: 'Units', component: Unit },
   
+  { path: '/product/product/productcomment/:productId', name: 'Product Comment', component: ProductComment},
   { path: '/product/product/productimage/add', name: 'Product Images', component: ProductImageForm},
   { path: '/product/product/productimage/:productId', name: 'Product Images', component: ProductImage},
   { path: '/product/product/add', name: 'Addproduct', component: ProductForm, exact : true},
   { path: '/product/product/:productId', name: 'Editproduct', component: ProductForm},
   { path: '/product/product', name: 'Products', component: Product },
   { path: '/user', name: 'Products', component: User },
-
+  { path: '*', name: '', component: Page404 },
 ];
 
 export default routes;

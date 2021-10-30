@@ -1,21 +1,16 @@
-import React from 'react'
-import { useSelector, useDispatch } from 'react-redux'
+import CIcon from '@coreui/icons-react'
 import {
-  CHeader,
-  CToggler,
-  CHeaderBrand,
+  CBreadcrumbRouter, CHeader, CHeaderBrand,
   CHeaderNav,
   CHeaderNavItem,
-  CHeaderNavLink,
-  CSubheader,
-  CBreadcrumbRouter,
-  CLink
+  CHeaderNavLink, CLink, CSubheader, CToggler
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-
+import React from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import userManager from 'src/Helper/userManager'
+import { toggleSideBar } from '../Redux/sidebarSlice'
 // routes config
 import routes from '../routes'
-
 import {
   TheHeaderDropdown,
   TheHeaderDropdownMssg,
@@ -23,8 +18,8 @@ import {
   TheHeaderDropdownTasks
 } from './index'
 
-import { toggleSideBar } from '../Redux/sidebarSlice'
-import userManager from 'src/Helper/userManager'
+
+
 
 const TheHeader = () => {
   const dispatch = useDispatch()
@@ -48,6 +43,7 @@ const TheHeader = () => {
 
   const onLogoutButtonClick = event => {
     event.preventDefault();
+    localStorage.removeItem('user');
     userManager.signoutRedirect({ id_token_hint: user.id_token });
     userManager.removeUser(); // removes the user data from sessionStorage
   };
@@ -56,7 +52,7 @@ const TheHeader = () => {
   //const expier = useSelector(state => state.oidc.user.expired)
   const isAuthenticated = user && !user.expired
   const isAdmin = isAuthenticated && user.profile['role'] === 'Admin';
-  console.log({user})
+  
 
   return (
     <CHeader withSubheader>

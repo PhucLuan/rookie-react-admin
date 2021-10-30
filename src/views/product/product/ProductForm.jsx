@@ -83,23 +83,23 @@ const ProductForm = () => {
     });
     
     const handleSubmitForm = (product, { resetForm }) => {
-        console.log({product})
+        
         const postCategory = async () => {
             try {
                 if (isAddMode) {
-                    var data = new FormData();
-                data.append('name', product.name);
-                data.append('code', product.code);
-                data.append('tag', product.tag);
-                data.append('categoryId', product.categoryId);
-                data.append('brandId', product.brandId);
-                data.append('unitId', product.unitId);
-                data.append('description', product.description);
-                data.append('price', product.price);
-                data.append('discount', product.discount);
-                data.append('images', product.images);
-                data.append('productStock', product.productStock);
-                data.append('ispublish', product.ispublish);
+                //     var data = new FormData();
+                // data.append('name', product.name);
+                // data.append('code', product.code);
+                // data.append('tag', product.tag);
+                // data.append('categoryId', product.categoryId);
+                // data.append('brandId', product.brandId);
+                // data.append('unitId', product.unitId);
+                // data.append('description', product.description);
+                // data.append('price', product.price);
+                // data.append('discount', product.discount);
+                // data.append('images', product.images);
+                // data.append('productStock', product.productStock);
+                // data.append('ispublish', product.ispublish);
                 await productApi.post(product)
                     .then((res) => {
                         alert(res);
@@ -139,9 +139,16 @@ const ProductForm = () => {
                         <>
                             <h3>{isAddMode? 'Add Product' : 'Edit Product' }</h3>
                             {isAddMode? '' : 
+                                <>
                                 <CButton color="primary" onClick={() => history.push(`/product/product/productimage/${productId}`)}>
                                     Product Image
-                                </CButton>}
+                                </CButton>
+                                {' '}
+                                <CButton color="primary" onClick={() => history.push(`/product/product/productcomment/${productId}`)}>
+                                    Product Comment
+                                </CButton>
+                                </>
+                                }
                             <Form>
                                 <FastField
                                     name="name"
@@ -232,12 +239,7 @@ const ProductForm = () => {
                                     label="Product Stock"
                                 />
                                  <Field label="Publish" type="checkbox" name="ispublish" />
-                                {/* <FastField
-                                    name="images"
-                                    component={ImageField}
-                                    label="Upload Image"
-                                    imageSrc = {initialProductValues.imageSrc}
-                                /> */}
+        
                                 <CFormGroup>
                                     <CButton type="submit" color="primary">{isAddMode?'Add product':'Save change'}</CButton>
                                     {' '}

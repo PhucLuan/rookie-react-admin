@@ -27,8 +27,7 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
         }
     }
 
-    const columns = React.useMemo(
-        () => [
+    const columns = [
           {
             Header: 'Product List',
             columns: [
@@ -77,9 +76,9 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                 )
               },
             ],
-          }],
-        [history]
-      )
+          }];
+      //   [history]
+      // )
 
     return (
         <>
