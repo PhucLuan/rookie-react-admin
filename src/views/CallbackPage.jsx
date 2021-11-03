@@ -10,7 +10,7 @@ const CallbackPage = () => {
     const handleLoginSuccess = (user) => {
 
       localStorage.setItem('user', JSON.stringify(user));
-      history.push('/');
+      history.push('/dashboard');
     }
 
     return (

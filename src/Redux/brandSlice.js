@@ -4,17 +4,18 @@ const initialState = {
     brandObj: {
         name : '',
         description : '',
-    }
+    },
+    brands : undefined
 }
 
 const brandSlice = createSlice({
     name: 'brandSlice',
     initialState,
     reducers: {
-        // onAddbrand(state) {
-        //     state.isAddMode = false;
-        //     //action = action.payload
-        // },
+        onLoadbrand(state, action) {
+            state.brands = action.payload;
+            //action = action.payload
+        },
         onEditbrand(state, action) {
             
             state.brandObj = action.payload
@@ -23,5 +24,5 @@ const brandSlice = createSlice({
 });
 
 const { reducer, actions } = brandSlice;
-export const { onEditbrand } = actions;
+export const { onEditbrand,onLoadbrand } = actions;
 export default reducer;

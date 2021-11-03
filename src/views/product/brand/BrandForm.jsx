@@ -27,19 +27,9 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
         name: '',
         description: '',
     } : editbrandmodel;
-    
-    // const myoptions = [
-    //     { value: '1', label: 'Chocolate' },
-    //     { value: '2', label: 'Strawberry' },
-    //     { value: '3', label: 'Vanilla' }
-    // ]
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
-
-        // categoryId: Yup.number()
-           // .required('This field is required.')
-            //.nullable(),
     });
     const handleSubmitForm = (brand,{resetForm}) =>{
         if (isAddMode) {
@@ -83,8 +73,6 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
         >
             {formikProps => {
                 // do something here ...
-                const { values, errors, touched } = formikProps;
-                console.log({ values, errors, touched });
 
                 return (
                     <>
@@ -104,14 +92,7 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
                                 label="Description"
                                 placeholder="Eg: Wow nature ..."
                             />
-                            {/* <FastField
-                                name="categoryId"
-                                component={SelectField}
 
-                                label="Category"
-                                placeholder="What's your photo category?"
-                                options={myoptions}
-                            /> */}
                             <CFormGroup>
                                 <CButton type="submit" color="primary">{isAddMode?'Add brand':'Save change'}</CButton>
                                 {' '}

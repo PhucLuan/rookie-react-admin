@@ -7,6 +7,8 @@ import productimageReducer from './productimageSlide';
 import createOidcMiddleware from 'redux-oidc';
 import userManager from 'src/Helper/userManager';
 import { reducer as oidc } from 'redux-oidc';
+import createSagaMiddleware from '@redux-saga/core';
+import rootSaga from './Saga/rootSaga';
 
 const rootReducer = {
     sidebar: sidebarReducer,
@@ -17,10 +19,14 @@ const rootReducer = {
     oidc,
 }
 const oidcMiddleware = createOidcMiddleware(userManager);
-const middleware = [oidcMiddleware];
+const sagaMiddleware = createSagaMiddleware();
+const middleware = [oidcMiddleware,sagaMiddleware];
 
 const store = configureStore({
     reducer: rootReducer,
     middleware: middleware,
 })
+
+sagaMiddleware.run(rootSaga);
+
 export default store;

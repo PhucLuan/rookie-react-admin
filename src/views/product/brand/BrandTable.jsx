@@ -3,12 +3,14 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import brandApi from 'src/api/brandApi';
 import { onEditbrand } from 'src/Redux/brandSlice';
+import ReactTable from 'src/reusable/ReactTable';
 
 const BrandTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
 
     const dispatch = useDispatch();
 
     const handleEditBrand = (item) => {
+        console.log(item)
         dispatch(onEditbrand(item))
         onEditMode(item.id)
     }
@@ -33,47 +35,57 @@ const BrandTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
         
     }
 
-    const items = listitem.map(
-        (item,index) => {
-            
-            return (
-                <tr key = {item.id}>
-                    <th scope="row">{item.id}</th>
-                    <td>{item.name}</td>
-                    <td>{item.description}</td>
-                    <td>{item.totalProduct}</td>
-                    <td>{item.addedDate}</td>
-                    <td>{item.modifiedDate}</td>
-                    <td>
-                        <div style={{ width: "110px" }}>
-                            <CButton color="warning" onClick={()=>handleEditBrand(item)}>Edit</CButton>
-                            {' '}
-                            <CButton color="danger" onClick={() => handleDeleteBrand(item.id,item.name)}>Del</CButton>
-                        </div>
-                    </td>
-                </tr>
-            )
-        }
-
-    )
-
+    const columns = [
+        {
+          Header: 'Brand List',
+          columns: [
+          {
+              Header: 'ID',
+              accessor: 'id',
+              },
+            {
+              Header: 'Brand Name',
+              accessor: 'name',
+            },
+            {
+              Header: 'Brand Description',
+              accessor: 'description',
+            },
+            {
+              Header: 'TotalProduct',
+              accessor: 'totalProduct',
+            },
+            {
+              Header: 'AddedDate',
+              accessor: 'addedDate',
+            },
+            {
+                Header: 'ModifiedDate',
+                accessor: 'modifiedDate',
+              },
+            {
+              Header: 'Published',
+              Cell: (row) => {
+                  return  <input type="checkbox" checked={row.cell.value} disabled />
+                },
+              accessor: 'ispublish',
+            },
+            {
+              Header: 'Action',
+              Cell: ({row}) => (
+                  <div>
+                      <CButton color="warning" onClick={()=>handleEditBrand(row.original)}>Edit</CButton>
+                      {' '}
+                      <CButton color="danger" onClick={() => handleDeleteBrand(row.original.id,row.original.name)}>Delete</CButton>
+                  </div>
+              )
+            },
+          ],
+        }];
     return (
-        <table responsive="true" hover = "true" width="100%">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">TotalProduct</th>
-                    <th scope="col">AddedDate</th>
-                    <th scope="col">ModifiedDate</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {items}
-            </tbody>
-        </table>
+        <>
+            <ReactTable columns={columns} data={listitem} ></ReactTable>
+        </>
     )
 }
 

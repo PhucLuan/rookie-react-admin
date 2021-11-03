@@ -24,7 +24,7 @@ const ProductComment = () => {
     console.log({ProductComments})
     return (
         <div>
-            {ProductComments&&<ProductCommentTable listitem = {ProductComments}  />}
+            {ProductComments && <ProductCommentTable listitem = {ProductComments}  />}
         </div>
     )
 }

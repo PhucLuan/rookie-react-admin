@@ -46,11 +46,9 @@ const Brand = () => {
     const handlerefresh = () => {
         setisRefresh(!isRefresh);
     }
-
     useEffect(() => {
         const fetchProductList = async () => {
             try {
-                //const params = { _page: 1, _limit: 10 };
                 const response = await brandApi.getAll();
                 setBrands(response);
             } catch (error) {
@@ -58,8 +56,6 @@ const Brand = () => {
             }
         }
         fetchProductList();
-
-
     }, [isRefresh])
 
     const handleEditBrand = (Id) => {

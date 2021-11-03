@@ -1,8 +1,9 @@
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CFormGroup, CRow } from '@coreui/react'
+import { CButton, CFormGroup } from '@coreui/react';
 import { FastField, Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import productApi from 'src/api/productApi';
+import LayoutFilter from 'src/containers/LayoutFilter';
 import InputField from 'src/custom-fields/InputField';
 import SelectField from 'src/custom-fields/SelectField';
 import ProductTable from './ProductTable';
@@ -37,6 +38,7 @@ const Product = () => {
             console.log('Failed to fetch product list: ', error);
         }
     }
+
     useEffect(() => {
 
         const fetchFilterlist = async () => {
@@ -80,23 +82,18 @@ const Product = () => {
 
     return (
         <div>
-            <CButton color="info" onClick={() => history.push("/product/product/add")}>Add</CButton>
-            <CRow>
-                <CCol>
-                    <CCard>
-                        <CCardHeader>
-                            Combined All Table
-                        </CCardHeader>
-                        <CCardBody>
-                            {Filterlist === undefined ? '' :
+            <CButton color="info" className='mb-2' onClick={() => history.push("/product/product/add")}>Add</CButton>
+            
+            <LayoutFilter>
+            {Filterlist === undefined ? '' :
                                 <Formik
                                     initialValues={initialFilter}
                                     onSubmit={(values) => handleSubmitForm(values)}
                                 >
                                     {formikProps => {
                                         // do something here ...
-                                        const { values, errors, touched } = formikProps;
-                                        console.log({ values, errors, touched });
+                                        //const { values, errors, touched } = formikProps;
+                                        //console.log({ values, errors, touched });
                                         return (
                                             <>
                                                 <Form>
@@ -155,15 +152,13 @@ const Product = () => {
                                 <ProductTable
                                     listitem={Products.items}
                                     handlerefreshDeleteItem={handlerefresh} />}
+
                             <div>
                                 <CButton onClick={() => prevPage(Filter)} >Previous</CButton>
                                 {' '}
                                 <CButton onClick={() => nextPage(Filter)} >Next</CButton>
                             </div>
-                        </CCardBody>
-                    </CCard>
-                </CCol>
-            </CRow>
+            </LayoutFilter>
         </div>
     )
 }

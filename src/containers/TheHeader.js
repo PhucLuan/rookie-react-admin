@@ -7,7 +7,6 @@ import {
 } from '@coreui/react'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import userManager from 'src/Helper/userManager'
 import { toggleSideBar } from '../Redux/sidebarSlice'
 // routes config
 import routes from '../routes'
@@ -35,25 +34,6 @@ const TheHeader = () => {
     dispatch(toggleSideBar(val))
   }
 
-  ////
-  const onLoginButtonClick = event => {
-    event.preventDefault();
-    userManager.signinRedirect();
-  };
-
-  const onLogoutButtonClick = event => {
-    event.preventDefault();
-    localStorage.removeItem('user');
-    userManager.signoutRedirect({ id_token_hint: user.id_token });
-    userManager.removeUser(); // removes the user data from sessionStorage
-  };
-
-  const user = useSelector(state => state.oidc.user)
-  //const expier = useSelector(state => state.oidc.user.expired)
-  const isAuthenticated = user && !user.expired
-  const isAdmin = isAuthenticated && user.profile['role'] === 'Admin';
-  
-
   return (
     <CHeader withSubheader>
       <CToggler
@@ -68,39 +48,13 @@ const TheHeader = () => {
       />
       <CHeaderBrand className="mx-auto d-lg-none" to="/">
         <CIcon name="logo" height="48" alt="Logo" />
-        
+
       </CHeaderBrand>
 
       <CHeaderNav className="d-md-down-none mr-auto">
         <CHeaderNavItem className="px-3" >
           <CHeaderNavLink to="/dashboard">Dashboard</CHeaderNavLink>
         </CHeaderNavItem>
-        {isAuthenticated ? (
-          <div>
-            <div className="text-primary" to="/profile">
-              {user.profile.given_name}
-            </div>
-          </div>
-        ) : (
-          <React.Fragment />
-        )}
-        <div>
-          <button
-            className="btn btn-primary"
-            onClick={
-              isAuthenticated ? onLogoutButtonClick : onLoginButtonClick
-            }
-          >
-            {isAuthenticated ? 'Log Out' : 'Log In'}
-          </button>
-        </div>
-        {isAdmin ? (
-          <div>
-            <button className="btn btn-warning">Admin</button>
-          </div>
-        ) : (
-          <React.Fragment />
-        )}
         <CHeaderNavItem className="px-3">
           <CHeaderNavLink to="/users">Users</CHeaderNavLink>
         </CHeaderNavItem>

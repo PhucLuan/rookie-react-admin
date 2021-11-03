@@ -3,6 +3,7 @@ import React from 'react'
 import { useDispatch } from 'react-redux'
 import categoryApi from 'src/api/categoryApi';
 import { onEditcategory } from 'src/Redux/categorySlice';
+import ReactTable from 'src/reusable/ReactTable';
 
 const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
 
@@ -32,56 +33,68 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
           }
         
     }
-
-    const items = listitem.map(
-        (item,index) => {
-            
-            return (
-                <tr key = {item.id}>
-                    <th scope="row">{item.id}</th>
-                    <td>{item.name}</td>
-                    <td>{item.order}</td>
-                    <td>{item.categoryParentName}</td>
-                    <td>{item.description}</td>
-                    <td>{item.totalProduct}</td>
-                    <td>
-                        <input type="checkbox" checked={item.ispublish} disabled/>
-                    </td>
-                    <td>{item.addedDate}</td>
-                    <td>{item.modifiedDate}</td>
-                    <td>
-                        <div style={{ width: "110px" }}>
-                            <CButton color="warning" onClick={()=>handleEditCategory(item)}>Edit</CButton>
-                            {' '}
-                            <CButton color="danger" onClick={() => handleDeleteCategory(item.id,item.name)}>Del</CButton>
-                        </div>
-                    </td>
-                </tr>
-            )
-        }
-
-    )
+    
+    
+    const columns = [
+        {
+          Header: 'Category List',
+          columns: [
+          {
+              Header: 'ID',
+              accessor: 'id',
+              },
+            {
+              Header: 'Category Name',
+              accessor: 'name',
+            },
+            {
+                Header: 'Order',
+                accessor: 'order',
+              },
+              {
+                Header: 'Category Parent',
+                accessor: 'categoryParentName',
+              },
+            {
+              Header: 'Category Description',
+              accessor: 'description',
+            },
+            {
+              Header: 'TotalProduct',
+              accessor: 'totalProduct',
+            },
+            {
+              Header: 'AddedDate',
+              accessor: 'addedDate',
+            },
+            {
+                Header: 'ModifiedDate',
+                accessor: 'modifiedDate',
+              },
+            {
+              Header: 'Published',
+              Cell: (row) => {
+                  return  <input type="checkbox" checked={row.cell.value} disabled />
+                },
+              accessor: 'ispublish',
+            },
+            {
+              Header: 'Action',
+              Cell: ({row}) => (
+                  <div>
+                      <CButton color="warning" onClick={()=>handleEditCategory(row.original)}>Edit</CButton>
+                      {' '}
+                      <CButton color="danger" onClick={() => handleDeleteCategory(row.original.id,row.original.name)}>Delete</CButton>
+                  </div>
+              )
+            },
+          ],
+        }];
 
     return (
-        <table responsive="true" hover = "true" width="100%">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Name</th>
-                    <th scope="col">Order</th>
-                    <th scope="col">Category Parent</th>
-                    <th scope="col">Description</th>
-                    <th scope="col">TotalProduct</th>
-                    <th scope="col">Ispublish</th>
-                    <th scope="col">AddedDate</th>
-                    <th scope="col">ModifiedDate</th>
-                    <th scope="col">Action</th>
-                </tr>
-            </thead>
-            <tbody>
-                {items}
-            </tbody>
-        </table>
+        <>
+            <ReactTable columns={columns} data={listitem} ></ReactTable>
+        </>
     )
 }
 
