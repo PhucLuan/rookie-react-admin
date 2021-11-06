@@ -57,15 +57,16 @@ const _nav =  [
         _tag: 'CSidebarNavItem',
         name: 'Product',
         to: '/product/product',
-      },
-      {
-        _tag: 'CSidebarNavItem',
-        name: 'Product Comments',
-        to: '/product/productcomment',
-      },
+      }
     ]
   }
   ,
+  {
+    _tag: 'CSidebarNavItem',
+    name: 'Oders',
+    to: '/order',
+    icon: 'cil-chart-pie'
+  },
   {
     _tag: 'CSidebarNavItem',
     name: 'Users',

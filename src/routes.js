@@ -16,11 +16,14 @@ const ProductImageForm = React.lazy(() => import('./views/product/product/produc
 const ProductComment = React.lazy(() => import('./views/product/product/productcomment/ProductComment'));
 
 const User = React.lazy(() => import('./views/user/User'));
+const Order = React.lazy(() => import('./views/order/Order'));
+const OrderDetail = React.lazy(() => import('./views/order/orderdetail/OrderDetail.jsx'));
 
 //import ProductForm from './views/product/product/ProductForm';
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
+  { path: '/', exact: true, name: 'Dashboard', component: Dashboard },
   { path: '/dashboard', name: 'Dashboard', component: Dashboard },
 
   // { path: '/users', exact: true,  name: 'Users', component: Users },
@@ -36,7 +39,9 @@ const routes = [
   { path: '/product/product/add', name: 'Addproduct', component: ProductForm, exact : true},
   { path: '/product/product/:productId', name: 'Editproduct', component: ProductForm},
   { path: '/product/product', name: 'Products', component: Product },
-  { path: '/user', name: 'Products', component: User },
+  { path: '/order/:orderId', name: 'OrderDetail', component: OrderDetail },
+  { path: '/order', name: 'Orders', component: Order },
+  { path: '/user', name: 'Users', component: User },
   { path: '*', name: '', component: Page404 },
 ];
 

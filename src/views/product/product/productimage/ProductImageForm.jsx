@@ -19,14 +19,12 @@ ProductImageForm.defaultProps = {
 const defaultImageSrc = "/avatars/defaultImage.jpg";
 
 const initialProductValues = {
-    //productid: 0,
     imageFile: null,
     title: '',
     productId: 0,
     imageSrc: defaultImageSrc,
-    ispublish: false
-    //ispublish: 0
-
+    ispublish: false,
+    order:0,
 }
 
 function ProductImageForm({productImageId, handlerefresh, closeModal, productId}) {
@@ -56,6 +54,7 @@ function ProductImageForm({productImageId, handlerefresh, closeModal, productId}
                     data.append('Title', productImage.title);
                     data.append('ImageFile', productImage.imageFile);
                     data.append('Ispublish', productImage.ispublish);
+                    data.append('order', productImage.order);
                     await productImageApi.post(data)
                     .then((res)=>{
                         alert(res);
@@ -110,6 +109,12 @@ function ProductImageForm({productImageId, handlerefresh, closeModal, productId}
                                 placeholder="Eg: Wow nature ..."
                             />
                             <Field label = "Publish" type="checkbox" name="ispublish" />
+                            <FastField
+                                    name="order"
+                                    component={InputField}
+                                    type="number"
+                                    label="Order"
+                                />
                             {isAddMode ? 
                                 <FastField
                                 name="imageFile"

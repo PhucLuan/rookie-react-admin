@@ -37,7 +37,7 @@ const TheHeaderDropdown = () => {
           />
         </div>
       </CDropdownToggle>
-      {isAdmin ? (
+      {isAuthenticated ? (
         <CDropdownMenu className="pt-0" placement="bottom-end">
           <CDropdownItem
             header
@@ -48,7 +48,7 @@ const TheHeaderDropdown = () => {
             <strong>Account</strong>
           </CDropdownItem>
           <CDropdownItem>
-            <CIcon name="cil-user" className="mfe-2" />Admin
+            <CIcon name="cil-user" className="mfe-2" />{isAdmin && "Admin"}
           </CDropdownItem>
           <CDropdownItem divider />
           <CDropdownItem onClick = {onLogoutButtonClick}>

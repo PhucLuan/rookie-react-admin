@@ -26,6 +26,10 @@ axiosClient.interceptors.response.use((response) => {
     return response;
 }, (error) => {
     // Handle errors
+    if (error.response.status === 403) {
+        alert("access forbidden")
+    }
+    
     throw error;
 });
 export default axiosClient;

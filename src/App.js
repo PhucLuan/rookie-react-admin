@@ -3,7 +3,8 @@ import {
   BrowserRouter as Router,
   Switch,
   Route
-} from "react-router-dom";import { PrivateRoute } from './reusable/PrivateRoute';
+} from "react-router-dom";
+import { PrivateRoute } from './reusable/PrivateRoute';
 import './scss/style.scss';
 import CallbackPage from './views/CallbackPage';
 

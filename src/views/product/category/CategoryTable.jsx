@@ -2,6 +2,7 @@ import { CButton } from '@coreui/react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import categoryApi from 'src/api/categoryApi';
+import { ParseDateTime } from 'src/Helper/ParseDateTime';
 import { onEditcategory } from 'src/Redux/categorySlice';
 import ReactTable from 'src/reusable/ReactTable';
 
@@ -20,7 +21,7 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
                 await categoryApi.delete(id)
                 .then(res => 
                     {
-                        alert(res);
+                        alert("Add success");
                         handlerefreshDeleteItem();
                     });
                 ;                
@@ -64,13 +65,25 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
               accessor: 'totalProduct',
             },
             {
-              Header: 'AddedDate',
+              Header: 'Addeddate',
               accessor: 'addedDate',
+              Cell: ({row}) => (
+                <div>
+                  {/* {row.original.addedDate} */}
+                {ParseDateTime(row.original.addedDate)}
+                </div>
+            )
             },
             {
-                Header: 'ModifiedDate',
-                accessor: 'modifiedDate',
-              },
+              Header: 'ModifiedDate',
+              accessor: 'modifiedDate',
+              Cell: ({row}) => (
+                <div>
+                  {/* {row.original.addedDate} */}
+                {ParseDateTime(row.original.modifiedDate)}
+                </div>
+            )
+            },
             {
               Header: 'Published',
               Cell: (row) => {

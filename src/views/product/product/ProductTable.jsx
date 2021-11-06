@@ -4,6 +4,7 @@ import { useHistory } from 'react-router';
 import productApi from 'src/api/productApi';
 import 'src/style/admin.css';
 import ReactTable from 'src/reusable/ReactTable';
+import { ParseDateTime } from 'src/Helper/ParseDateTime';
 
 const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
 
@@ -64,6 +65,26 @@ const ProductTable = ({ listitem, handlerefreshDeleteItem }) => {
                     return  <input type="checkbox" checked={row.cell.value} disabled />
                   },
                 accessor: 'ispublish',
+              },
+              {
+                Header: 'Addeddate',
+                accessor: 'addedDate',
+                Cell: ({row}) => (
+                  <div>
+                    {/* {row.original.addedDate} */}
+                  {ParseDateTime(row.original.addedDate)}
+                  </div>
+              )
+              },
+              {
+                Header: 'ModifiedDate',
+                accessor: 'modifiedDate',
+                Cell: ({row}) => (
+                  <div>
+                    {/* {row.original.addedDate} */}
+                  {ParseDateTime(row.original.modifiedDate)}
+                  </div>
+              )
               },
               {
                 Header: 'Action',

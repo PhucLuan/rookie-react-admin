@@ -1,4 +1,4 @@
-import { CButton, CFormGroup } from '@coreui/react';
+import { CButton, CCol, CCollapse, CFormGroup, CRow } from '@coreui/react';
 import { FastField, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
@@ -15,7 +15,7 @@ const initialFilter = {
     orderProperty: "",
     desc: true,
     page: 1,
-    limit: 10
+    limit: 5
 }
 
 const Product = () => {
@@ -40,7 +40,7 @@ const Product = () => {
     }
 
     useEffect(() => {
-
+        console.log("Call Api")
         const fetchFilterlist = async () => {
             try {
                 //const params = { _page: 1, _limit: 10 };
@@ -80,84 +80,95 @@ const Product = () => {
 
     }
 
+    const [visibleA, setVisibleA] = useState(false)
+
     return (
         <div>
             <CButton color="info" className='mb-2' onClick={() => history.push("/product/product/add")}>Add</CButton>
+            {'  '}
+            <CButton color="secondary " className='mb-2' onClick={() => setVisibleA(!visibleA)}>Filter</CButton>
+            <CRow>
+                <CCol xs={12}>
+                    <CCollapse show = {visibleA} >
+                    <LayoutFilter name="Filter">
+                {Filterlist === undefined ? '' :
+                    <Formik
+                        initialValues={initialFilter}
+                        onSubmit={(values) => handleSubmitForm(values)}
+                    >
+                        {formikProps => {
+                            // do something here ...
+                            //const { values, errors, touched } = formikProps;
+                            //console.log({ values, errors, touched });
+                            return (
+                                <>
+                                    <Form>
+                                        <FastField
+                                            name="limit"
+                                            component={InputField}
+                                            type="number"
+                                            label="Item_per_page"
+                                        />
+                                        <FastField
+                                            name="keySearch"
+                                            component={InputField}
+
+                                            label="KeySearch"
+                                            placeholder="KeySearch"
+                                        />
+                                        <FastField
+                                            name="brandId"
+                                            component={SelectField}
+
+                                            label="Brand"
+                                            placeholder="What's your product brand?"
+                                            options={Filterlist.brandList.map(
+                                                (category) => {
+                                                    return (
+                                                        { value: category.id, label: category.name }
+                                                    )
+                                                }
+                                            )}
+                                        />
+                                        <FastField
+                                            name="categoryId"
+                                            component={SelectField}
+
+                                            label="Category"
+                                            placeholder="What's your product category?"
+                                            options={Filterlist.categoryList.map(
+                                                (category) => {
+                                                    return (
+                                                        { value: category.id, label: category.name }
+                                                    )
+                                                }
+                                            )}
+                                        />
+                                        <CFormGroup>
+                                            <CButton type="submit" color="primary">Search</CButton>
+                                        </CFormGroup>
+                                    </Form>
+                                </>
+                            );
+                        }}
+                    </Formik>
+                }
+            </LayoutFilter>
+                    </CCollapse>
+                </CCol>
+            </CRow>
             
-            <LayoutFilter>
-            {Filterlist === undefined ? '' :
-                                <Formik
-                                    initialValues={initialFilter}
-                                    onSubmit={(values) => handleSubmitForm(values)}
-                                >
-                                    {formikProps => {
-                                        // do something here ...
-                                        //const { values, errors, touched } = formikProps;
-                                        //console.log({ values, errors, touched });
-                                        return (
-                                            <>
-                                                <Form>
-                                                    <FastField
-                                                        name="limit"
-                                                        component={InputField}
-                                                        type="number"
-                                                        label="Item_per_page"
-                                                    />
-                                                    <FastField
-                                                        name="keySearch"
-                                                        component={InputField}
+            <LayoutFilter name="Product table">
+                {Products !== undefined &&
+                    <ProductTable
+                        listitem={Products.items}
+                        handlerefreshDeleteItem={handlerefresh} />}
 
-                                                        label="KeySearch"
-                                                        placeholder="KeySearch"
-                                                    />
-                                                    <FastField
-                                                        name="brandId"
-                                                        component={SelectField}
-
-                                                        label="Brand"
-                                                        placeholder="What's your product brand?"
-                                                        options={Filterlist.brandList.map(
-                                                            (category) => {
-                                                                return (
-                                                                    { value: category.id, label: category.name }
-                                                                )
-                                                            }
-                                                        )}
-                                                    />
-                                                    <FastField
-                                                        name="categoryId"
-                                                        component={SelectField}
-
-                                                        label="Category"
-                                                        placeholder="What's your product category?"
-                                                        options={Filterlist.categoryList.map(
-                                                            (category) => {
-                                                                return (
-                                                                    { value: category.id, label: category.name }
-                                                                )
-                                                            }
-                                                        )}
-                                                    />
-                                                    <CFormGroup>
-                                                        <CButton type="submit" color="primary">Search</CButton>
-                                                    </CFormGroup>
-                                                </Form>
-                                            </>
-                                        );
-                                    }}
-                                </Formik>
-                            }
-
-                            {Products !== undefined &&
-                                <ProductTable
-                                    listitem={Products.items}
-                                    handlerefreshDeleteItem={handlerefresh} />}
-
-                            <div>
-                                <CButton onClick={() => prevPage(Filter)} >Previous</CButton>
-                                {' '}
-                                <CButton onClick={() => nextPage(Filter)} >Next</CButton>
-                            </div>
+                <div>
+                    <CButton onClick={() => prevPage(Filter)} >Previous</CButton>
+                    {' '}
+                    <CButton onClick={() => nextPage(Filter)} >Next</CButton>
+                </div>
             </LayoutFilter>
         </div>
     )

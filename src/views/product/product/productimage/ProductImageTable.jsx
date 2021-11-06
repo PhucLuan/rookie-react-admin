@@ -57,18 +57,9 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
                     <td>
                         {ParseDateTime(item.addedDate)}
                     </td>
-                    {/* <td>
-                        <p><b>Comment</b> {item.productImageComments}</p>
-                        <p><b>Rating</b> {item.averageRating}%</p>
-                    </td>
-                    <td>{item.totalImage}</td>
                     <td>
-                        <p><b>AddedDate</b> {item.addedDate}</p>
-                        <p><b>ModifiedDate</b> {item.modifiedDate}%</p>
+                        {item.order}
                     </td>
-                    <td>
-                    <input type="checkbox" checked={item.ispublish} disabled/>
-                    </td> */}
                     <td>
                         <div style={{ width: "110px" }}>
                             <CButton color="warning"
@@ -99,6 +90,7 @@ const ProductImageTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) =>
                     <th scope="col">Publish</th>
                     <th scope="col">Public ID (cloudinary)</th>
                     <th scope="col">Add date</th>
+                    <th scope="col">Order</th>
                     <th scope="col">Action</th>
                 </tr>
             </thead>

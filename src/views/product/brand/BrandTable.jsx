@@ -2,6 +2,7 @@ import { CButton } from '@coreui/react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
 import brandApi from 'src/api/brandApi';
+import { ParseDateTime } from 'src/Helper/ParseDateTime';
 import { onEditbrand } from 'src/Redux/brandSlice';
 import ReactTable from 'src/reusable/ReactTable';
 
@@ -56,13 +57,25 @@ const BrandTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
               accessor: 'totalProduct',
             },
             {
-              Header: 'AddedDate',
+              Header: 'Addeddate',
               accessor: 'addedDate',
+              Cell: ({row}) => (
+                <div>
+                  {/* {row.original.addedDate} */}
+                {ParseDateTime(row.original.addedDate)}
+                </div>
+            )
             },
             {
-                Header: 'ModifiedDate',
-                accessor: 'modifiedDate',
-              },
+              Header: 'ModifiedDate',
+              accessor: 'modifiedDate',
+              Cell: ({row}) => (
+                <div>
+                  {/* {row.original.addedDate} */}
+                {ParseDateTime(row.original.modifiedDate)}
+                </div>
+            )
+            },
             {
               Header: 'Published',
               Cell: (row) => {
