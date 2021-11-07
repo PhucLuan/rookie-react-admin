@@ -24,14 +24,15 @@ SelectField.defaultProps = {
 function SelectField(props) {
     const { field, form, options, label, placeholder, disabled } = props;
     const { name, value } = field;
-    const selectedOption = options.find(option => option.value+'' === value +'');
-    console.log({options})
+    
+    const selectedOption = value === '00000000-0000-0000-0000-000000000000'?null: options.find(option => option.value+'' === value +'');
+    
     const { errors, touched } = form;
     const showError = errors[name] && touched[name];
 
     const handleSelectedOptionChange = (selectedOption) => {
         const selectedValue = selectedOption ? selectedOption.value : selectedOption;
-
+        
         const changeEvent = {
             target: {
                 name: name,

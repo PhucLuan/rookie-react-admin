@@ -70,14 +70,15 @@ const ProductForm = () => {
         fetchProductAddEdit();
     }, [isAddMode,productId])
 
+    const idDefault = '00000000-0000-0000-0000-000000000000';
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
         code: Yup.string().required('This field is required.'),
         tag: Yup.string().required('This field is required.'),
         price: Yup.number().required('This field is required.'),
-        categoryId: Yup.string().required('This field is required.'),
-        brandId: Yup.string().required('This field is required.'),
-        unitId: Yup.string().required('This field is required.'),
+        categoryId: Yup.string().notOneOf([idDefault],"This field is required"),
+        brandId: Yup.string().notOneOf([idDefault],"This field is required"),
+        unitId: Yup.string().notOneOf([idDefault],"This field is required"),
                 //images: Yup.string().required('This field is required.'),
 
     });
@@ -87,19 +88,6 @@ const ProductForm = () => {
         const postCategory = async () => {
             try {
                 if (isAddMode) {
-                //     var data = new FormData();
-                // data.append('name', product.name);
-                // data.append('code', product.code);
-                // data.append('tag', product.tag);
-                // data.append('categoryId', product.categoryId);
-                // data.append('brandId', product.brandId);
-                // data.append('unitId', product.unitId);
-                // data.append('description', product.description);
-                // data.append('price', product.price);
-                // data.append('discount', product.discount);
-                // data.append('images', product.images);
-                // data.append('productStock', product.productStock);
-                // data.append('ispublish', product.ispublish);
                 await productApi.post(product)
                     .then((res) => {
                         alert(res);
@@ -117,6 +105,7 @@ const ProductForm = () => {
                     });
                 }                
             } catch (error) {
+                console.log(error)
                 alert(error)
             }
         }
@@ -137,6 +126,7 @@ const ProductForm = () => {
                     console.log({ values, errors, touched });
                     return (
                         <>
+                        
                             <h3>{isAddMode? 'Add Product' : 'Edit Product' }</h3>
                             {isAddMode? '' : 
                                 <>
@@ -149,6 +139,7 @@ const ProductForm = () => {
                                 </CButton>
                                 </>
                                 }
+                            
                             <Form>
                                 <FastField
                                     name="name"
