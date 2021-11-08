@@ -1,4 +1,4 @@
-import { CButton, CFormGroup } from '@coreui/react';
+import { CButton, CFormGroup, CLabel } from '@coreui/react';
 import { FastField, Field, Form, Formik } from 'formik';
 import React, { useEffect, useState } from 'react'
 import { useHistory, useParams } from 'react-router';
@@ -24,7 +24,7 @@ const initialProductValues = {
     imageSrc: defaultImageSrc,
     images: null,
     ispublish: 0,
-    productStock:0
+    productStock: 0
 
 }
 const initialProductAddEdit = {
@@ -37,10 +37,14 @@ const ProductForm = () => {
 
     const [productAddEdit, setproductAddEdit] = useState(initialProductAddEdit);
     const [isValueLoad, setisValueLoad] = useState(false);
-    const {productId} = useParams();
-    
+    const { productId } = useParams();
+
     const isAddMode = !productId;
     const history = useHistory();
+
+    const [isCoutinue, setisCoutinue] = useState(false)
+
+    const [productAdded, setproductAdded] = useState()
 
     useEffect(() => {
         const fetchProductAddEdit = async () => {
@@ -54,13 +58,12 @@ const ProductForm = () => {
                     setproductAddEdit(response);
                     //setisValueLoad(true);
                 }
-                else
-                    {
-                        const response = await productApi.getAddEdit(productId);
-                        setproductAddEdit(response);
-                        console.log({response})
-                    }
-                
+                else {
+                    const response = await productApi.getAddEdit(productId);
+                    setproductAddEdit(response);
+                    console.log({ response })
+                }
+
                 setisValueLoad(true);
 
             } catch (error) {
@@ -68,42 +71,49 @@ const ProductForm = () => {
             }
         }
         fetchProductAddEdit();
-    }, [isAddMode,productId])
+    }, [isAddMode, productId])
 
     const idDefault = '00000000-0000-0000-0000-000000000000';
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
         code: Yup.string().required('This field is required.'),
         tag: Yup.string().required('This field is required.'),
-        price: Yup.number().required('This field is required.'),
-        categoryId: Yup.string().notOneOf([idDefault],"This field is required"),
-        brandId: Yup.string().notOneOf([idDefault],"This field is required"),
-        unitId: Yup.string().notOneOf([idDefault],"This field is required"),
-                //images: Yup.string().required('This field is required.'),
+        price: Yup.number().moreThan(0, 'Price must greater than 0'),
+        discount: Yup.number().typeError('you must specify a number')
+                              .min(0, 'discount must greater than or equal to 0')
+                              .max(100, 'discount must less than or equal 100'),
+        categoryId: Yup.string().notOneOf([idDefault], "This field is required"),
+        brandId: Yup.string().notOneOf([idDefault], "This field is required"),
+        unitId: Yup.string().notOneOf([idDefault], "This field is required"),
+        productStock: Yup.number().min(0, 'productStock must greater than or equal 0'),
+        //images: Yup.string().required('This field is required.'),
 
     });
-    
+
     const handleSubmitForm = (product, { resetForm }) => {
-        
+
         const postCategory = async () => {
             try {
                 if (isAddMode) {
-                await productApi.post(product)
-                    .then((res) => {
-                        alert(res);
-                        resetForm();
-                    });
-                
+                    await productApi.post(product)
+                        .then((res) => {
+
+                            setproductAdded(res)
+                            alert("Add Success");
+                            if (!isCoutinue) {
+                                resetForm();
+                            }
+
+                        });
                 }
-                else
-                {
+                else {
                     product.id = productId;
                     await productApi.put(product)
-                    .then((res) => {
-                        alert(res);
-                        
-                    });
-                }                
+                        .then((res) => {
+                            alert(res);
+
+                        });
+                }
             } catch (error) {
                 console.log(error)
                 alert(error)
@@ -111,7 +121,9 @@ const ProductForm = () => {
         }
         postCategory();
     }
-
+    const SaveAndContinue = () => {
+        setisCoutinue(!isCoutinue);
+    }
 
     return !isValueLoad ? (<div>Loading...</div>) : (
         <>
@@ -126,20 +138,23 @@ const ProductForm = () => {
                     console.log({ values, errors, touched });
                     return (
                         <>
-                        
-                            <h3>{isAddMode? 'Add Product' : 'Edit Product' }</h3>
-                            {isAddMode? '' : 
-                                <>
-                                <CButton color="primary" onClick={() => history.push(`/product/product/productimage/${productId}`)}>
+                            <h3>{isAddMode ? 'Add Product' : 'Edit Product'}</h3>
+                            {isAddMode && isCoutinue && productAdded &&
+                                <CButton color="primary" onClick={() => history.push(`/product/product/productimage/${productAdded.id}`)}>
                                     Product Image
-                                </CButton>
-                                {' '}
-                                <CButton color="primary" onClick={() => history.push(`/product/product/productcomment/${productId}`)}>
-                                    Product Comment
-                                </CButton>
+                                </CButton>}
+                            {isAddMode ? '' :
+                                <>
+                                    <CButton color="primary" onClick={() => history.push(`/product/product/productimage/${productId}`)}>
+                                        Product Image
+                                    </CButton>
+                                    {' '}
+                                    <CButton color="primary" onClick={() => history.push(`/product/product/productcomment/${productId}`)}>
+                                        Product Comment
+                                    </CButton>
                                 </>
-                                }
-                            
+                            }
+
                             <Form>
                                 <FastField
                                     name="name"
@@ -229,12 +244,20 @@ const ProductForm = () => {
                                     type="number"
                                     label="Product Stock"
                                 />
-                                 <Field label="Publish" type="checkbox" name="ispublish" />
-        
                                 <CFormGroup>
-                                    <CButton type="submit" color="primary">{isAddMode?'Add product':'Save change'}</CButton>
+                                    <CLabel>IsPublish</CLabel>{' '}
+                                    <Field label="Publish" type="checkbox" name="ispublish" />
+                                </CFormGroup>
+                                <CFormGroup>
+
+                                    <CButton type="submit" onClick={() => SaveAndContinue()} color="primary">{'Save & Continue edit'}</CButton>
                                     {' '}
-                                    {/* <CButton color="secondary" onClick={() => closeModal()}>Close</CButton> */}
+                                    <CButton type="submit" color="primary">{isAddMode ? 'Add product' : 'Save change'}</CButton>
+                                    {' '}
+                                    {isAddMode &&
+                                        <CButton color="danger" onClick={() => formikProps.resetForm()}>
+                                            Reset form
+                                        </CButton>}
                                 </CFormGroup>
                             </Form>
                         </>

@@ -21,7 +21,7 @@ const CategoryTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
                 await categoryApi.delete(id)
                 .then(res => 
                     {
-                        alert("Add success");
+                        alert(res);
                         handlerefreshDeleteItem();
                     });
                 ;                

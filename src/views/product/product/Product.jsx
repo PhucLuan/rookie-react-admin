@@ -1,11 +1,9 @@
-import { CButton, CCol, CCollapse, CFormGroup, CRow } from '@coreui/react';
-import { FastField, Form, Formik } from 'formik';
+import { CButton, CCol, CCollapse, CRow } from '@coreui/react';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import productApi from 'src/api/productApi';
 import LayoutFilter from 'src/containers/LayoutFilter';
-import InputField from 'src/custom-fields/InputField';
-import SelectField from 'src/custom-fields/SelectField';
+import ProductFilter from './ProductFilter';
 import ProductTable from './ProductTable';
 
 const initialFilter = {
@@ -15,7 +13,7 @@ const initialFilter = {
     orderProperty: "",
     desc: true,
     page: 1,
-    limit: 5
+    limit: 5,
 }
 
 const Product = () => {
@@ -90,83 +88,7 @@ const Product = () => {
             <CRow>
                 <CCol xs={12}>
                     <CCollapse show={visibleA} >
-                        <LayoutFilter name="Filter">
-                            {Filterlist === undefined ? '' :
-                                <Formik
-                                    initialValues={initialFilter}
-                                    onSubmit={(values) => handleSubmitForm(values)}
-                                >
-                                    {formikProps => {
-                                        // do something here ...
-                                        //const { values, errors, touched } = formikProps;
-                                        //console.log({ values, errors, touched });
-                                        return (
-                                            <>
-                                                <Form>
-                                                    <CRow>
-                                                        <CCol md={6}>
-                                                            <FastField
-                                                                name="keySearch"
-                                                                component={InputField}
-
-                                                                label="KeySearch"
-                                                                placeholder="KeySearch"
-                                                            />
-                                                        </CCol>
-                                                        <CCol md={6}>
-                                                            <FastField
-                                                                name="limit"
-                                                                component={InputField}
-                                                                type="number"
-                                                                label="Item_per_page"
-                                                            />
-                                                        </CCol>
-                                                    </CRow>
-                                                    <CRow>
-                                                        <CCol md={6}>
-                                                            <FastField
-                                                                name="brandId"
-                                                                component={SelectField}
-
-                                                                label="Brand"
-                                                                placeholder="What's your product brand?"
-                                                                options={Filterlist.brandList.map(
-                                                                    (category) => {
-                                                                        return (
-                                                                            { value: category.id, label: category.name }
-                                                                        )
-                                                                    }
-                                                                )}
-                                                            />
-                                                        </CCol>
-                                                        <CCol md={6}>
-                                                            <FastField
-                                                                name="categoryId"
-                                                                component={SelectField}
-
-                                                                label="Category"
-                                                                placeholder="What's your product category?"
-                                                                options={Filterlist.categoryList.map(
-                                                                    (category) => {
-                                                                        return (
-                                                                            { value: category.id, label: category.name }
-                                                                        )
-                                                                    }
-                                                                )}
-                                                            />
-                                                        </CCol>
-                                                    </CRow>
-
-                                                    <CFormGroup>
-                                                        <CButton type="submit" color="primary">Search</CButton>
-                                                    </CFormGroup>
-                                                </Form>
-                                            </>
-                                        );
-                                    }}
-                                </Formik>
-                            }
-                        </LayoutFilter>
+                        <ProductFilter Filterlist = {Filterlist} initialFilter={initialFilter} handleSubmitForm = {(values) => handleSubmitForm(values)} />
                     </CCollapse>
                 </CCol>
             </CRow>

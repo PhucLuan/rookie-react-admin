@@ -1,4 +1,4 @@
-import { CButton, CFormGroup } from '@coreui/react';
+import { CButton, CFormGroup, CLabel } from '@coreui/react';
 import { FastField, Field, Form, Formik } from 'formik';
 import React from 'react'
 import InputField from 'src/custom-fields/InputField';
@@ -24,27 +24,27 @@ const initialProductValues = {
     productId: 0,
     imageSrc: defaultImageSrc,
     ispublish: false,
-    order:0,
+    order: 0,
 }
 
-function ProductImageForm({productImageId, handlerefresh, closeModal, productId}) {
-    
+function ProductImageForm({ productImageId, handlerefresh, closeModal, productId }) {
+
     const isAddMode = !productImageId;
 
     const editproductImagemodel = useSelector(state => state.productImage.productImageObj)
 
     const initialValues = isAddMode ? initialProductValues : editproductImagemodel;
-    
-    const validationSchema = isAddMode ? 
+
+    const validationSchema = isAddMode ?
         Yup.object().shape({
             title: Yup.string().required('This field is required.'),
             imageFile: Yup.string().required('This field is required.')
-        }) : 
-         Yup.object().shape({
+        }) :
+        Yup.object().shape({
             title: Yup.string().required('This field is required.'),
         });
-    
-    const handleSubmitForm = (productImage,{resetForm}) =>{
+
+    const handleSubmitForm = (productImage, { resetForm }) => {
         if (isAddMode) {
             const postProductImage = async () => {
                 try {
@@ -56,41 +56,40 @@ function ProductImageForm({productImageId, handlerefresh, closeModal, productId}
                     data.append('Ispublish', productImage.ispublish);
                     data.append('order', productImage.order);
                     await productImageApi.post(data)
-                    .then((res)=>{
-                        alert(res);
-                        handlerefresh();
-                    });
+                        .then((res) => {
+                            alert(res);
+                            handlerefresh();
+                        });
                     resetForm();
-                    
+
                 } catch (error) {
                     alert(error)
                 }
             }
             postProductImage();
         }
-        else
-            {
-                const putProductImage = () => {
-                    try {
-                        //productImage.id = 
-                        productImageApi.put(productImage)
-                        .then((res)=>{
+        else {
+            const putProductImage = () => {
+                try {
+                    //productImage.id = 
+                    productImageApi.put(productImage)
+                        .then((res) => {
                             alert(res);
                             handlerefresh();
                         });
-                        
-                    } catch (error) {
-                        alert(error)
-                    }
+
+                } catch (error) {
+                    alert(error)
                 }
-                putProductImage();
             }
+            putProductImage();
+        }
     }
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values,  { resetForm }) => handleSubmitForm(values,{resetForm})}
+            onSubmit={(values, { resetForm }) => handleSubmitForm(values, { resetForm })}
         >
             {formikProps => {
                 // do something here ...
@@ -104,28 +103,32 @@ function ProductImageForm({productImageId, handlerefresh, closeModal, productId}
                             <FastField
                                 name="title"
                                 component={InputField}
-                                
+
                                 label="Title"
                                 placeholder="Eg: Wow nature ..."
                             />
-                            <Field label = "Publish" type="checkbox" name="ispublish" />
-                            <FastField
-                                    name="order"
-                                    component={InputField}
-                                    type="number"
-                                    label="Order"
-                                />
-                            {isAddMode ? 
-                                <FastField
-                                name="imageFile"
-                                component={ImageField}
-                                label="Upload Image"
-                                imageSrc = {initialProductValues.imageSrc}
-                            /> : ''
-                            }
-                            
                             <CFormGroup>
-                                <CButton type="submit" color="primary">{isAddMode?'Add productImage':'Save change'}</CButton>
+                                <CLabel>IsPublish</CLabel>{' '}
+                                <Field label="Publish" type="checkbox" name="ispublish" />
+                            </CFormGroup>
+
+                            <FastField
+                                name="order"
+                                component={InputField}
+                                type="number"
+                                label="Order"
+                            />
+                            {isAddMode ?
+                                <FastField
+                                    name="imageFile"
+                                    component={ImageField}
+                                    label="Upload Image"
+                                    imageSrc={initialProductValues.imageSrc}
+                                /> : ''
+                            }
+
+                            <CFormGroup>
+                                <CButton type="submit" color="primary">{isAddMode ? 'Add productImage' : 'Save change'}</CButton>
                                 {' '}
                                 <CButton color="secondary" onClick={() => closeModal()}>Close</CButton>
                             </CFormGroup>

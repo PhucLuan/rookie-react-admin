@@ -1,4 +1,4 @@
-import { CButton, CFormGroup } from '@coreui/react';
+import { CButton, CFormGroup, CLabel } from '@coreui/react';
 import { FastField, Field, Form, Formik } from 'formik';
 import React from 'react'
 import InputField from 'src/custom-fields/InputField';
@@ -18,8 +18,8 @@ CategoryForm.defaultProps = {
 }
 
 
-function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
-    
+function CategoryForm({ categoryId, handlerefresh, categories, closeModal }) {
+
     const isAddMode = !categoryId;
 
     const editcategorymodel = useSelector(state => state.category.categoryObj)
@@ -27,63 +27,64 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
     const initialValues = isAddMode ? {
         name: '',
         description: '',
-        order:0,
+        order: 0,
         ispublish: false,
     } : editcategorymodel;
-    
+
 
     const categoriesoption = categories.map(
-        (category) => {return(
-            {value: category.id, label: category.name}
-        )}
+        (category) => {
+            return (
+                { value: category.id, label: category.name }
+            )
+        }
     )
 
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
 
         // categoryId: Yup.number()
-           // .required('This field is required.')
-            //.nullable(),
+        // .required('This field is required.')
+        //.nullable(),
     });
-    const handleSubmitForm = (category,{resetForm}) =>{
+    const handleSubmitForm = (category, { resetForm }) => {
         if (isAddMode) {
             const postCategory = async () => {
                 try {
                     await categoryApi.post(category)
-                    .then((res)=>{
-                        alert(res);
-                        handlerefresh();
-                    });
+                        .then((res) => {
+                            alert("Add success");
+                            handlerefresh();
+                        });
                     resetForm();
-                    
+
                 } catch (error) {
                     alert(error)
                 }
             }
             postCategory();
         }
-        else
-            {
-                const putCategory = () => {
-                    try {
-                        categoryApi.put(category)
-                        .then((res)=>{
+        else {
+            const putCategory = () => {
+                try {
+                    categoryApi.put(category)
+                        .then((res) => {
                             alert(res);
                             handlerefresh();
                         });
-                        
-                    } catch (error) {
-                        alert(error)
-                    }
+
+                } catch (error) {
+                    alert(error)
                 }
-                putCategory();
             }
+            putCategory();
+        }
     }
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values,  { resetForm }) => handleSubmitForm(values,{resetForm})}
+            onSubmit={(values, { resetForm }) => handleSubmitForm(values, { resetForm })}
         >
             {formikProps => {
                 // do something here ...
@@ -97,7 +98,7 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
                             <FastField
                                 name="name"
                                 component={InputField}
-                                
+
                                 label="Name"
                                 placeholder="Eg: Wow nature ..."
                             />
@@ -109,11 +110,11 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
                                 placeholder="Eg: Wow nature ..."
                             />
                             <FastField
-                                    name="order"
-                                    component={InputField}
-                                    type="number"
-                                    label="Order"
-                                />
+                                name="order"
+                                component={InputField}
+                                type="number"
+                                label="Order"
+                            />
                             <FastField
                                 name="categoryId"
                                 component={SelectField}
@@ -122,9 +123,12 @@ function CategoryForm({categoryId, handlerefresh,categories, closeModal}) {
                                 placeholder="What's your product category?"
                                 options={categoriesoption}
                             />
-                            <Field label="Publish" type="checkbox" name="ispublish" />
                             <CFormGroup>
-                                <CButton type="submit" color="primary">{isAddMode?'Add category':'Save change'}</CButton>
+                                <CLabel>IsPublish</CLabel>{' '}
+                                <Field label="Publish" type="checkbox" name="ispublish" />
+                            </CFormGroup>
+                            <CFormGroup>
+                                <CButton type="submit" color="primary">{isAddMode ? 'Add category' : 'Save change'}</CButton>
                                 {' '}
                                 <CButton color="secondary" onClick={() => closeModal()}>Close</CButton>
                             </CFormGroup>
