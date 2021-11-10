@@ -1,6 +1,6 @@
-import { CButton } from '@coreui/react'
-import React from 'react'
-import { useDispatch } from 'react-redux'
+import { CButton } from '@coreui/react';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { ParseDateTime } from 'src/Helper/ParseDateTime';
 import { onDeletebrand, onEditbrand } from 'src/Redux/brandSlice';
 import ReactTable from 'src/reusable/ReactTable';

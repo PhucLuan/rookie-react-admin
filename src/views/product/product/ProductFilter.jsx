@@ -36,7 +36,7 @@ const ProductFilter = ({ Filterlist, initialFilter, handleSubmitForm }) => {
                                                 component={SelectField}
 
                                                 label="Sort by"
-                                                placeholder="Ahihi"
+                                                placeholder="Select sort type"
                                                 options={mysortnameoptions}
                                             />
                                         </CCol>

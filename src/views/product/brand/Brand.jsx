@@ -100,7 +100,7 @@ const Brand = () => {
                 contentLabel="Example Modal"
             >
                 <div className='clearfix'></div>
-                <BrandForm brandId={brandId}></BrandForm>
+                <BrandForm brandId={brandId} closeModal={closeModal}></BrandForm>
             </Modal>
         </>
     )

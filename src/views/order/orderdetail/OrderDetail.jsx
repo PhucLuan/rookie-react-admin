@@ -10,19 +10,19 @@ function OrderDetail() {
     const { orderId } = useParams();
 
     const [OrderDetail, setOrderDetail] = useState();
-    
+
     const history = useHistory();
 
     function renderSwitch(param) {
-        switch(param) {
-          case 'Processing':
-            return <CBadge color="info">Processing</CBadge>;
-          case 'Complete':
-            return <CBadge color="success">Complete</CBadge>;
-          default: //pending
-            return <CBadge color="warning">Pending</CBadge>;
+        switch (param) {
+            case 'Processing':
+                return <CBadge color="info">Processing</CBadge>;
+            case 'Complete':
+                return <CBadge color="success">Complete</CBadge>;
+            default: //pending
+                return <CBadge color="warning">Pending</CBadge>;
         }
-      }
+    }
 
     useEffect(() => {
         const fetchOrderList = async (orderId) => {
@@ -40,10 +40,10 @@ function OrderDetail() {
     return (
         <div>
             <CButton
-                            onClick={() => history.goBack()}
-                            className="mb-2 btn-dark" >
-                            Back
-                        </CButton>
+                onClick={() => history.goBack()}
+                className="mb-2 btn-dark" >
+                Back
+            </CButton>
             {OrderDetail === undefined ? "" :
                 <CCard>
                     <CCardHeader>
@@ -64,14 +64,13 @@ function OrderDetail() {
                         </CRow>
                     </CCardBody>
 
-                    
+
                 </CCard>
-                
+
             }
             <LayoutFilter name="Order Table">
-            {OrderDetail !== undefined && <OrderDetailTable listitem = {OrderDetail.orderProductLists}></OrderDetailTable>}
+                {OrderDetail !== undefined && <OrderDetailTable listitem={OrderDetail.orderProductLists}></OrderDetailTable>}
             </LayoutFilter>
-            Ahihihi
         </div>
     )
 }

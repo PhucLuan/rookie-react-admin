@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "@redux-saga/core/effects";
 import brandApi from "src/api/brandApi";
-import { onLoadbrand, onFetchdata, onUpdatebrand, onRefresh, onCreatebrand, onDeletebrand } from '../brandSlice';
+import { onCreatebrand, onDeletebrand, onFetchdata, onLoadbrand, onRefresh, onUpdatebrand } from '../brandSlice';
 
 const getAllBrand = () => {
   return (

@@ -1,6 +1,6 @@
 import { CButton, CFormGroup, CLabel } from '@coreui/react';
 import { FastField, Field, Form, Formik } from 'formik';
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react';
 import { useHistory, useParams } from 'react-router';
 import productApi from 'src/api/productApi';
 import InputField from 'src/custom-fields/InputField';

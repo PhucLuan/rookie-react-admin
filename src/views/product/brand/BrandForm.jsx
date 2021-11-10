@@ -1,11 +1,11 @@
 import { CButton, CFormGroup } from '@coreui/react';
 import { FastField, Form, Formik } from 'formik';
-import React from 'react'
-import InputField from 'src/custom-fields/InputField';
 import PropTypes from 'prop-types';
-import * as Yup from 'yup';
+import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import InputField from 'src/custom-fields/InputField';
 import { onCreatebrand, onUpdatebrand } from 'src/Redux/brandSlice';
+import * as Yup from 'yup';
 
 BrandForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -28,7 +28,6 @@ function BrandForm({ brandId, closeModal }) {
         description: '',
     } : editbrandmodel;
 
-    console.log('initialValues', initialValues)
 
     const dispatch = useDispatch()
 
