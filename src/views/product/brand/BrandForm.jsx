@@ -4,8 +4,8 @@ import React from 'react'
 import InputField from 'src/custom-fields/InputField';
 import PropTypes from 'prop-types';
 import * as Yup from 'yup';
-import { useSelector } from 'react-redux';
-import brandApi from 'src/api/brandApi';
+import { useDispatch, useSelector } from 'react-redux';
+import { onCreatebrand, onUpdatebrand } from 'src/Redux/brandSlice';
 
 BrandForm.propTypes = {
     onSubmit: PropTypes.func,
@@ -17,8 +17,8 @@ BrandForm.defaultProps = {
 }
 
 
-function BrandForm({brandId, handlerefresh, closeModal}) {
-    
+function BrandForm({ brandId, closeModal }) {
+
     const isAddMode = !brandId;
 
     const editbrandmodel = useSelector(state => state.brand.brandObj)
@@ -28,48 +28,28 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
         description: '',
     } : editbrandmodel;
 
+    console.log('initialValues', initialValues)
+
+    const dispatch = useDispatch()
+
     const validationSchema = Yup.object().shape({
         name: Yup.string().required('This field is required.'),
     });
-    const handleSubmitForm = (brand,{resetForm}) =>{
+    const handleSubmitForm = (brand, { resetForm }) => {
         if (isAddMode) {
-            const postBrand = async () => {
-                try {
-                    await brandApi.post(brand)
-                    .then((res)=>{
-                        alert(res);
-                        handlerefresh();
-                    });
-                    resetForm();
-                    
-                } catch (error) {
-                    alert(error)
-                }
-            }
-            postBrand();
+
+            dispatch(onCreatebrand(brand))
+            resetForm();
         }
-        else
-            {
-                const putBrand = () => {
-                    try {
-                        brandApi.put(brand)
-                        .then((res)=>{
-                            alert(res);
-                            handlerefresh();
-                        });
-                        
-                    } catch (error) {
-                        alert(error)
-                    }
-                }
-                putBrand();
-            }
+        else {
+            dispatch(onUpdatebrand(brand))
+        }
     }
     return (
         <Formik
             initialValues={initialValues}
             validationSchema={validationSchema}
-            onSubmit={(values,  { resetForm }) => handleSubmitForm(values,{resetForm})}
+            onSubmit={(values, { resetForm }) => handleSubmitForm(values, { resetForm })}
         >
             {formikProps => {
                 // do something here ...
@@ -81,7 +61,7 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
                             <FastField
                                 name="name"
                                 component={InputField}
-                                
+
                                 label="Name"
                                 placeholder="Eg: Wow nature ..."
                             />
@@ -94,7 +74,7 @@ function BrandForm({brandId, handlerefresh, closeModal}) {
                             />
 
                             <CFormGroup>
-                                <CButton type="submit" color="primary">{isAddMode?'Add brand':'Save change'}</CButton>
+                                <CButton type="submit" color="primary">{isAddMode ? 'Add brand' : 'Save change'}</CButton>
                                 {' '}
                                 <CButton color="secondary" onClick={() => closeModal()}>Close</CButton>
                             </CFormGroup>

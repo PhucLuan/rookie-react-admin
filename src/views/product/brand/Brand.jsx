@@ -3,20 +3,22 @@ import {
 } from '@coreui/react'
 import React, { useEffect, useState } from 'react'
 import Modal from 'react-modal'
-import brandApi from 'src/api/brandApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { onFetchdata } from 'src/Redux/brandSlice'
 import BrandForm from './BrandForm'
 import BrandTable from './BrandTable'
 
 const Brand = () => {
 
-    const [isRefresh, setisRefresh] = useState(false);
-
     const [modalIsOpen, setIsOpen] = useState(false);
 
     const [brandId, setbrandId] = useState()
 
-    const [Brands, setBrands] = useState();
+    const isRefresh = useSelector(state => state.brand.isRefresh)
 
+    
+    const Brands = useSelector(state => state.brand.brands)
+    
     const customStyles = {
         content: {
             top: '40%',
@@ -42,27 +44,21 @@ const Brand = () => {
         setbrandId(undefined)
         openModal();
     }
-
-    const handlerefresh = () => {
-        setisRefresh(!isRefresh);
-    }
+    
+    const dispatch = useDispatch();
     useEffect(() => {
-        const fetchProductList = async () => {
-            try {
-                const response = await brandApi.getAll();
-                setBrands(response);
-            } catch (error) {
-                console.log('Failed to fetch product list: ', error);
-            }
-        }
-        fetchProductList();
-    }, [isRefresh])
+
+        dispatch(onFetchdata());
+
+    }, [dispatch,isRefresh])
 
     const handleEditBrand = (Id) => {
         setbrandId(Id);
         openModal();
     }
+
     Modal.setAppElement('#root');
+
     return (
         <>
             <div id='mymodal'></div>
@@ -92,8 +88,7 @@ const Brand = () => {
                         </CCardHeader>
                         <CCardBody>
                             {Brands !== undefined && <BrandTable listitem={Brands}
-                                onEditMode={handleEditBrand}
-                                handlerefreshDeleteItem={handlerefresh}></BrandTable>}
+                                onEditMode={handleEditBrand}></BrandTable>}
                         </CCardBody>
                     </CCard>
                 </CCol>
@@ -104,10 +99,8 @@ const Brand = () => {
                 style={customStyles}
                 contentLabel="Example Modal"
             >
-                {/* <h2 ref={(_subtitle) => (subtitle = _subtitle)}>Hello</h2> */}
-                {/* <button onClick={closeModal}>close</button> */}
                 <div className='clearfix'></div>
-                <BrandForm brandId={brandId} handlerefresh={handlerefresh} closeModal={closeModal}></BrandForm>
+                <BrandForm brandId={brandId}></BrandForm>
             </Modal>
         </>
     )

@@ -1,12 +1,11 @@
 import { CButton } from '@coreui/react'
 import React from 'react'
 import { useDispatch } from 'react-redux'
-import brandApi from 'src/api/brandApi';
 import { ParseDateTime } from 'src/Helper/ParseDateTime';
-import { onEditbrand } from 'src/Redux/brandSlice';
+import { onDeletebrand, onEditbrand } from 'src/Redux/brandSlice';
 import ReactTable from 'src/reusable/ReactTable';
 
-const BrandTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
+const BrandTable = ({ listitem, onEditMode }) => {
 
     const dispatch = useDispatch();
 
@@ -17,21 +16,8 @@ const BrandTable = ({ listitem, onEditMode, handlerefreshDeleteItem }) => {
     }
     
     const handleDeleteBrand = (id, name) => {
-        const deleteBrand = async () => {
-            try {
-                await brandApi.delete(id)
-                .then(res => 
-                    {
-                        alert(res);
-                        handlerefreshDeleteItem();
-                    });
-                ;                
-            } catch (error) {
-                alert(error)
-            }
-        }
         if (window.confirm("Are you sure you want to delete: "+name+" ?")) {
-            deleteBrand();            
+            dispatch(onDeletebrand(id));            
           }
         
     }
